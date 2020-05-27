@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const secrets = require('../config/secrets');
 const User = require('../users/user-model');
-const verifyUser = require('./authenticate-middleware');
 
 function isValid(user) {
     return Boolean(user.username && user.password && typeof user.password === 'string')
