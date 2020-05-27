@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/userID=:id', (req, res) => {
     const id = req.params.id;
     User.findById(id)
         .then(response => {
@@ -26,5 +26,20 @@ router.get('/:id', (req, res) => {
             res.status(401).json(error);
         })
 })
+
+router.get('/username=:username', (req, res) => {
+    const username = req.params.username;
+    console.log(username)
+    User.findByUsername(username)
+        .then(response => {
+            console.log(response);
+            res.status(200).json(response);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(401).json(error);
+        })
+})
+
 
 module.exports = router;
