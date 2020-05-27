@@ -10,7 +10,7 @@ function isValid(user) {
 }
 
 function generateToken(user) {
-    const paylod = {
+    const payload = {
         username: user.username,
     }
     const options = {
