@@ -54,5 +54,18 @@ router.delete('/username=:username', (req, res) => {
         })
 })
 
+router.post('/:username/save', (req, res) => {
+    const username = req.params.username;
+    console.log(req.body);
+    User.saveComments(username, req.body)
+        .then(response => {
+            console.log(response);
+            res.status(202).json(response);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json(error);
+        })
+})
 
 module.exports = router;
