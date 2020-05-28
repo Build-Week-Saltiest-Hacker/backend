@@ -13,6 +13,6 @@ module.exports = function verifyUser(req, res, next) {
             }
         })
     }else{
-        res.status(403).json({ message: 'Unauthorized'});
+        res.status(401).json({ message: 'Unauthorized'});
     }
 }
