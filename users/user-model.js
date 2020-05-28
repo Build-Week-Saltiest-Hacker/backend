@@ -1,13 +1,14 @@
 const db = require('../data/dbConfig');
 module.exports = {
-    add,
+    addUser,
     find,
     findBy,
     findById,
-    findByUsername
+    findByUsername,
+    deleteUser
 }
 
-function add(user) {
+function addUser(user) {
     return db('users').insert(user)
     .then(show => {
         return findById(show[0])
@@ -28,4 +29,8 @@ function findById(id) {
 
 function findByUsername(username) {
     return db('users').where('username', username).first()
+}
+
+function deleteUser(username) {
+    return db('users').where('username', username).del();
 }
