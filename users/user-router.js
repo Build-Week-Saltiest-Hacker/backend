@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
         })
         .catch(error => {
             console.log(error);
-            res.status(401).json(error);
+            res.status(500).json(error);
         })
 })
 
@@ -23,7 +23,7 @@ router.get('/userID=:id', (req, res) => {
         })
         .catch(error => {
             console.log(error);
-            res.status(401).json(error);
+            res.status(500).json(error);
         })
 })
 
@@ -37,7 +37,20 @@ router.get('/username=:username', (req, res) => {
         })
         .catch(error => {
             console.log(error);
-            res.status(401).json(error);
+            res.status(500).json(error);
+        })
+})
+
+router.delete('/username=:username', (req, res) => {
+    const username = req.params.username;
+    User.deleteUser(username)
+        .then(response => {
+            console.log(response);
+            res.status(202).json(response);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json(error);
         })
 })
 
