@@ -53,7 +53,7 @@ router.delete('/username=:username', (req, res) => {
         })
 })
 
-router.post('/username=:username/comments', (req, res) => {
+router.post('/username=:username/save', (req, res) => {
     const username = req.params.username;
     console.log(req.params.username);
     User.findByUsername(username)
@@ -106,6 +106,7 @@ router.get('/username=:username/comments', (req, res) => {
 
 router.put('/username=:username', (req, res) => {
     const username = req.params.username;
+
     
 })
 
