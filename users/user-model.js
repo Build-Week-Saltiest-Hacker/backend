@@ -6,7 +6,9 @@ module.exports = {
     findById,
     findByUsername,
     deleteUser,
-    saveComments
+    saveComments,
+    getComments,
+    setUserId
 };
 
 function addUser(user) {
@@ -25,7 +27,6 @@ function findBy(filter) {
 }
 
 function findById(id) {
-    console.log(id);
     return db('users').where('id', id).first();
 }
 
@@ -37,11 +38,21 @@ function deleteUser(username) {
     return db('users').where('username', username).del();
 }
 
-function saveComments(username, comments) {
-    console.log(username);
-    return db('users').where('username', username).select('saved').insert({saved: JSON.stringify(comments)});
+function saveComments(comment) {
+    console.log("save comment: ", comment);
+    return db('comments').insert(comment)
+}
+
+function getComments(id) {
+    return db('comments')
+        .where('user_id', id)
+        .select('*')
 }
 
 function updatePassword(username, password) {
     return db('users').where('username', username).select('password').update(password)
+}
+
+function setUserId(username) {
+    return db('users').select('id').where('username', username)
 }

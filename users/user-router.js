@@ -29,7 +29,6 @@ router.get('/userID=:id', (req, res) => {
 
 router.get('/username=:username', (req, res) => {
     const username = req.params.username;
-    console.log(username)
     User.findByUsername(username)
         .then(response => {
             console.log(response);
@@ -56,11 +55,48 @@ router.delete('/username=:username', (req, res) => {
 
 router.post('/username=:username/save', (req, res) => {
     const username = req.params.username;
-    console.log(username)
-    User.saveComments(username, req.body)
+    console.log(req.params.username);
+    User.findByUsername(username)
         .then(response => {
-            console.log(response);
-            res.status(202).json(response);
+            console.log("findbyUsername response: ", response);
+            req.body.map(comment => {
+                newObject = {
+                    ...comment,
+                    user_id: response.id
+                }
+                console.log("object ", newObject);
+                User.saveComments(newObject)
+                    .then(response => {
+                        console.log("That", response);
+                        res.status(202).json(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        res.status(500).json(error);
+                    })
+            })
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json(error);
+        })
+   
+})
+
+router.get('/username=:username/comments', (req, res) => {
+    const username = req.params.username;
+    User.findByUsername(username)
+        .then(response => {
+            id = response.id;
+            console.log(id);
+            User.getComments(id)
+                .then(response => {
+                    res.status(200).json(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                    res.status(500).json(error);
+                })
         })
         .catch(error => {
             console.log(error);
@@ -70,6 +106,7 @@ router.post('/username=:username/save', (req, res) => {
 
 router.put('/username=:username', (req, res) => {
     const username = req.params.username;
+
     
 })
 
