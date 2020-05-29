@@ -25,7 +25,8 @@ function findBy(filter) {
 }
 
 function findById(id) {
-    return db('users').where({id}).first();
+    console.log(id);
+    return db('users').where('id', id).first();
 }
 
 function findByUsername(username) {
@@ -37,5 +38,10 @@ function deleteUser(username) {
 }
 
 function saveComments(username, comments) {
-    return db('users').where('username', username).update({saved: JSON.stringify(comments)});
+    console.log(username);
+    return db('users').where('username', username).select('saved').insert({saved: JSON.stringify(comments)});
+}
+
+function updatePassword(username, password) {
+    return db('users').where('username', username).select('password').update(password)
 }
