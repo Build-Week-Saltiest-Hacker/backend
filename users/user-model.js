@@ -8,6 +8,7 @@ module.exports = {
     deleteUser,
     saveComments,
     getComments,
+    updatePassword,
     setUserId
 };
 
@@ -50,7 +51,7 @@ function getComments(id) {
 }
 
 function updatePassword(username, password) {
-    return db('users').where('username', username).select('password').update(password)
+    return db('users').where('username', username).update('password', password)
 }
 
 function setUserId(username) {

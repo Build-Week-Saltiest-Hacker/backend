@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../users/user-model');
+const Auth = require('../auth/authenticate-middleware');
 
 //returns all users
 router.get('/', (req, res) => {
@@ -106,8 +107,20 @@ router.get('/username=:username/comments', (req, res) => {
 
 router.put('/username=:username', (req, res) => {
     const username = req.params.username;
-
-    
+    User.findBy({username: username})
+        .then(([user]) => {
+            console.log(user);
+            if(user && bcrypt.compareSync(password, user.password)){
+                const token = Auth.generateToken(user);
+                res.status(200).json({ message: `${user.username} password successfully changed`, token });
+            }else{
+                res.status(401).json({ message: 'invalid username and/or password' });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({ message: error.message });
+        })
 })
 
 module.exports = router;
